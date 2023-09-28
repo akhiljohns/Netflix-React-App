@@ -7,26 +7,6 @@ import YouTube from "react-youtube";
 function RowPost(props) {
   const [movies, setMovies] = useState([]);
   const [urlId, seturlId] = useState("");
-  useEffect(() => {
-    axios
-      .get(props.url)
-      .then((response) => {
-        setMovies(response.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const opts = {
-    height: "390",
-    width: "100%",
-    playerVars: {
-      autoplay: 1,
-      
-    },
-  };
-  
 
   const handleTrailer = (id) => {
     axios.get(`movie/${id}/videos?api_key=${API_KEY}&language=en-US`)
@@ -50,6 +30,28 @@ function RowPost(props) {
       });
   };
   
+  useEffect(() => {
+    axios
+      .get(props.url)
+      .then((response) => {
+        setMovies(response.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props.url]); // Include props.url in the dependency array
+  
+  useEffect(() => {
+    // Include seturlId in the dependency array
+  }, [seturlId]);
+
+  const opts = {
+    height: "390",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   return (
     <div className="row">
@@ -57,7 +59,7 @@ function RowPost(props) {
       <div className="posters">
         {movies.map((obj) => (
           <img
-            key={obj.id} // Add a unique key based on the movie's ID
+            key={obj.id}
             onClick={() => handleTrailer(obj.id)}
             className={props.isSmall ? "smallPoster" : "poster"}
             src={`${imageUrl + obj.backdrop_path}`}
