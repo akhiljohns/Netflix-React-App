@@ -38,6 +38,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "dotenv": "^16.3.1",
+    "path-browserify": "^1.0.1"
   }
 }
